@@ -1,35 +1,40 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import "./App.css";
+import { Button } from "@chakra-ui/react";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Button
+        as="button"
+        height="24px"
+        lineHeight="1.2"
+        transition="all 0.2s cubic-bezier(.08,.52,.52,1)"
+        border="1px"
+        px="8px"
+        borderRadius="2px"
+        fontSize="14px"
+        fontWeight="semibold"
+        bg="#f5f6f7"
+        borderColor="#ccd0d5"
+        color="#4b4f56"
+        _hover={{ bg: "#ebedf0" }}
+        _active={{
+          bg: "#dddfe2",
+          transform: "scale(0.98)",
+          borderColor: "#bec3c9",
+        }}
+        _focus={{
+          boxShadow:
+            "0 0 1px 2px rgba(88, 144, 255, .75), 0 1px 1px rgba(0, 0, 0, .15)",
+        }}
+      >
+        a
+      </Button>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
