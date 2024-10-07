@@ -5,8 +5,7 @@ import {
   IconButton,
   IconButtonProps,
 } from "@chakra-ui/react";
-import reactLogo from './assets/react.svg'
-import './App.css'
+import "./App.css";
 
 interface IButton extends ButtonProps {
   isGroup?: boolean;
@@ -14,16 +13,13 @@ interface IButton extends ButtonProps {
   isIconBtn?: boolean;
   optionBtn?: IButton[];
   gap?: number;
+  SearchIcon: React.ReactElement;
 }
 
 interface IIconBtn extends IconButtonProps {
   children?: React.ReactNode | string;
+  SearchIcon: React.ReactElement;
 }
-
-const IconBtn = (props: IIconBtn) => {
-  const { ...restProps } = props;
-  return <IconButton {...restProps} />;
-};
 
 const CommonButton = (props: IButton) => {
   const {
@@ -33,8 +29,11 @@ const CommonButton = (props: IButton) => {
     gap = 2,
     isIconBtn,
     size = "xs",
+    SearchIcon,
     ...restProps
   } = props;
+
+  
   if (isGroup) {
     return (
       <ButtonGroup gap={gap}>
@@ -49,7 +48,7 @@ const CommonButton = (props: IButton) => {
     );
   }
   if (isIconBtn) {
-    return <IconBtn icon={<SearchIcon />} />;
+    return <IconBtn />;
   }
   return (
     <Button size={size} {...restProps}>
