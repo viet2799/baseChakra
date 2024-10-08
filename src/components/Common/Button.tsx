@@ -6,19 +6,13 @@ import {
   IconButtonProps,
 } from "@chakra-ui/react";
 
-interface IButton extends Omit<ButtonProps,"aria-label">, IconButtonProps {
+interface IButton extends ButtonProps, Omit<IconButtonProps, "aria-label"> {
   isGroup?: boolean;
   children?: React.ReactNode | string;
   isIconBtn?: boolean;
   optionBtn?: IButton[];
   gap?: number;
 }
-
-
-// const IconBtn = (props: IIconBtn) => {
-//   const { icon, descriptionIcon = "", ...restProp } = props;
-//   return <IconButton aria-label={descriptionIcon} icon={icon} {...restProp} />;
-// };
 
 const CommonButton = (props: IButton) => {
   const {
@@ -42,9 +36,7 @@ const CommonButton = (props: IButton) => {
     );
   }
   if (isIconBtn) {
-    return (
-      <IconButton  aria-label="" icon={icon} {...restProps} />
-    );
+    return <IconButton aria-label="" icon={icon} {...restProps} />;
   }
   return (
     <Button size={size} {...restProps}>
