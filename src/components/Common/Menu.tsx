@@ -7,7 +7,7 @@ import {
   MenuListProps,
   MenuProps,
 } from "@chakra-ui/react";
-
+// đéo nên custome như này vì cái charka có mẹ hết rồi 
 interface IMenuBtnCustome extends MenuProps {
   titleMenu?: string;
 }

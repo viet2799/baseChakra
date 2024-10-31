@@ -3,6 +3,7 @@ import "./App.css";
 import CommonButton from "./components/Common/Button";
 import { SearchIcon } from "@chakra-ui/icons";
 import MenuCustome from "./components/Common/Menu";
+import TooltipCustome from "./components/Common/Tooltip";
 
 function App() {
   const [flag, setFlag] = useBoolean();
@@ -12,6 +13,7 @@ function App() {
   const MenuItems = [
     {
       titleItem: "aaaa",
+      onClick: () => {},
     },
     {
       titleItem: "bbbb",
@@ -37,7 +39,7 @@ function App() {
         Click me to toggle the boolean value
       </button>
 
-      <MenuCustome MenuBtn={menuBtn} MenuItems={MenuItems} />
+      <TooltipCustome />
     </>
   );
 }
