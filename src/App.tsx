@@ -4,6 +4,7 @@ import CommonButton from "./components/Common/Button";
 import { SearchIcon } from "@chakra-ui/icons";
 import MenuCustome from "./components/Common/Menu";
 import TooltipCustome from "./components/Common/Tooltip";
+import CheckboxField from "./components/CustomeField/CheckboxField";
 
 function App() {
   const [flag, setFlag] = useBoolean();
@@ -21,25 +22,7 @@ function App() {
   ];
   return (
     <>
-      <CommonButton
-        colorScheme="blue"
-        aria-label="aaaaaaaa"
-        rounded={4}
-        icon={<SearchIcon />}
-        isIconBtn
-      />
-
-      <IconButton
-        colorScheme="red-40"
-        aria-label="aaaa"
-        icon={<SearchIcon />}
-      />
-      <p>Boolean state: {flag.toString()}</p>
-      <button onClick={setFlag.toggle}>
-        Click me to toggle the boolean value
-      </button>
-
-      <TooltipCustome />
+      <CheckboxField />
     </>
   );
 }
