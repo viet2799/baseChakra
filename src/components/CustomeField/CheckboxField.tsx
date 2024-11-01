@@ -7,7 +7,7 @@ interface ICheckboxField extends CheckboxProps {
   children?: React.ReactNode;
   field?: ControllerRenderProps<any, any>;
   formState?: UseFormStateReturn<any>;
-  onChangeCustome?: () => void;
+  onChangeCustome?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   customeStyleError?: string;
 }
 
@@ -41,12 +41,12 @@ const CheckboxField = (props: ICheckboxField) => {
       <Checkbox
         id={name}
         name={name}
-        onChange={() => {
+        onChange={(e) => {
           if (onChangeCustome) {
-            onChangeCustome();
+            onChangeCustome(e);
             return;
           }
-          onChange && onChange();
+          onChange && onChange(e);
         }}
         {...restProps}
       >
