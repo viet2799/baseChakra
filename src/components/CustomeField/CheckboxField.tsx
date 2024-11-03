@@ -1,10 +1,10 @@
-import { Checkbox, CheckboxGroup, CheckboxProps } from "@chakra-ui/react";
+import { Checkbox, CheckboxProps } from "@chakra-ui/react";
 import classNames from "classnames";
 import { get } from "lodash";
 import { ControllerRenderProps, UseFormStateReturn } from "react-hook-form";
 
 interface ICheckboxField extends CheckboxProps {
-  children?: React.ReactNode;
+  children?: React.ReactNode | string;
   field?: ControllerRenderProps<any, any>;
   formState?: UseFormStateReturn<any>;
   onChangeCustome?: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -20,7 +20,8 @@ const CheckboxField = (props: ICheckboxField) => {
     formState,
     ...restProps
   } = props;
-  const { name, onChange } = field || {};
+  const { name, value, onChange } = field || {};
+  console.log('value',value);
   const { touchedFields, errors, isSubmitted } = formState || {};
   const isTouched = get(touchedFields, name!);
   const errorMessage = get(errors, name!)?.message;
@@ -38,20 +39,22 @@ const CheckboxField = (props: ICheckboxField) => {
   };
   return (
     <div>
-      <Checkbox
-        id={name}
-        name={name}
-        onChange={(e) => {
-          if (onChangeCustome) {
-            onChangeCustome(e);
-            return;
-          }
-          onChange && onChange(e);
-        }}
-        {...restProps}
-      >
+      <div className="flex align-middle justify-center gap-4">
+        <Checkbox
+          id={name}
+          name={name}
+          defaultChecked={value}
+          onChange={(e) => {
+            if (onChangeCustome) {
+              onChangeCustome(e);
+              return;
+            }
+            onChange && onChange(e);
+          }}
+          {...restProps}
+        />
         {children}
-      </Checkbox>
+      </div>
       {renderError()}
     </div>
   );
