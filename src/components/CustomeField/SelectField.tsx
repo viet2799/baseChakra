@@ -1,33 +1,31 @@
-import { Radio, RadioGroup, RadioProps } from "@chakra-ui/react";
+import { Select, SelectProps } from "@chakra-ui/react";
 import classNames from "classnames";
 import { get } from "lodash";
+import React from "react";
 import { ControllerRenderProps, UseFormStateReturn } from "react-hook-form";
 
 interface IOptionData {
-  label?: string;
-  valueRadio: string | number;
+  value?: string | number;
+  label?: string | number;
 }
 
-interface IRadioFieldProps extends RadioProps {
-  isGroup?: boolean;
-  children?: React.ReactNode;
-  label?: string;
+interface ISelectFieldProps extends SelectProps {
+  optionData?: IOptionData[];
   field?: ControllerRenderProps<any, any>;
   formState?: UseFormStateReturn<any>;
   onChangeCustome?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   customeStyleError?: string;
-  isGroupRadio?: boolean;
-  optionData?: IOptionData[];
 }
-const RadioField = ({
-  field,
-  formState,
-  customeStyleError,
-  label,
-  isGroupRadio,
-  optionData,
-  ...restProps
-}: IRadioFieldProps) => {
+
+const SelectField = (props: ISelectFieldProps) => {
+  const {
+    optionData,
+    field,
+    formState,
+    onChangeCustome,
+    customeStyleError,
+    ...restProps
+  } = props;
   const { name, value, onChange } = field || {};
   const { touchedFields, errors, isSubmitted } = formState || {};
   const isTouched = get(touchedFields, name!);
@@ -45,23 +43,29 @@ const RadioField = ({
     }
   };
 
-  const renderRadioField = (item: IOptionData) => {
-    const { valueRadio, label } = item;
-    return (
-      <Radio {...restProps} checked={value === valueRadio} onChange={onChange}>
-        {label}
-      </Radio>
-    );
+  const onChangeSelect = (e: any) => {
+    if (onChangeCustome) {
+      onChangeCustome(e);
+      return;
+    }
+    if (onChange) {
+      onChange(e);
+      return;
+    }
   };
 
   return (
     <div>
-      <RadioGroup {...restProps}>
-        {optionData?.map((item: IOptionData) => renderRadioField(item))}
-      </RadioGroup>
+      <Select {...restProps} value={value} onChange={onChangeSelect}>
+        {optionData?.map((option: IOptionData, index: number) => (
+          <option key={index} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </Select>
       {renderError()}
     </div>
   );
 };
 
-export default RadioField;
+export default React.memo(SelectField);
