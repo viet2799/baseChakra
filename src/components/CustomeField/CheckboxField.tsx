@@ -9,6 +9,10 @@ interface ICheckboxField extends CheckboxProps {
   formState?: UseFormStateReturn<any>;
   onChangeCustome?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   customeStyleError?: string;
+  optionCheckbox?: {
+    value?: string;
+    label?: string;
+  };
 }
 
 const CheckboxField = (props: ICheckboxField) => {
@@ -21,7 +25,6 @@ const CheckboxField = (props: ICheckboxField) => {
     ...restProps
   } = props;
   const { name, value, onChange } = field || {};
-  console.log('value',value);
   const { touchedFields, errors, isSubmitted } = formState || {};
   const isTouched = get(touchedFields, name!);
   const errorMessage = get(errors, name!)?.message;
@@ -37,6 +40,7 @@ const CheckboxField = (props: ICheckboxField) => {
       );
     }
   };
+
   return (
     <div>
       <div className="flex align-middle justify-center gap-4">
@@ -49,7 +53,10 @@ const CheckboxField = (props: ICheckboxField) => {
               onChangeCustome(e);
               return;
             }
-            onChange && onChange(e);
+            if (onChange) {
+              onChange(e);
+              return;
+            }
           }}
           {...restProps}
         />
