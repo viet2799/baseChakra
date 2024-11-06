@@ -4,15 +4,10 @@ import RHFField from "./components/RHFField";
 import CommonButton from "./components/Common/Button";
 import { Select } from "@chakra-ui/react";
 import SelectField from "./components/CustomeField/SelectField";
+import TableCommon from "./components/Common/Table";
 
 function App() {
-  const {
-    handleSubmit,
-    control,
-    getFieldState,
-    formState,
-    watch,
-  } = useForm({
+  const { handleSubmit, control, getFieldState, formState, watch } = useForm({
     defaultValues: {
       checkbox: true,
       select1: "5",
@@ -35,7 +30,7 @@ function App() {
 
   return (
     <form onSubmit={handleSubmit(onSubmitForm)} className="w-full h-screen">
-      <Select>
+      {/* <Select>
         {optionDatas?.map((option) => (
           <option value={option.value}>{option.label}</option>
         ))}
@@ -46,7 +41,8 @@ function App() {
         component={SelectField}
         optionData={optionDatas}
       />
-      <CommonButton type="submit">Submit</CommonButton>
+      <CommonButton type="submit">Submit</CommonButton> */}
+      <TableCommon columns={[]} data={[]} />
     </form>
   );
 }
