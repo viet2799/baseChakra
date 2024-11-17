@@ -1,23 +1,10 @@
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import "./App.css";
 import RHFField from "./components/RHFField";
 import CommonButton from "./components/Common/Button";
-import {
-  Button,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  Select,
-  useDisclosure,
-} from "@chakra-ui/react";
-import SelectField from "./components/CustomeField/SelectField";
-import TableCommon from "./components/Common/Table";
-import InputField from "./components/CustomeField/InputField";
+
 import TextAreaField from "./components/CustomeField/TextAreaField";
+import TableCommon from "./components/Common/Table/Table";
 
 function App() {
   const { handleSubmit, control, getFieldState, formState, watch } = useForm({
@@ -35,14 +22,38 @@ function App() {
     console.log(value);
   };
 
-  const optionDatas = [
-    { value: "1", label: "Option 1" },
-    { value: "2", label: "Option 2" },
-    { value: "3", label: "Option 3" },
-    { value: "4", label: "Option 4" },
-    { value: "5", label: "Option 5" },
+  const dataSource = [
+    {
+      key: "1",
+      name: "Mike",
+      age: 32,
+      address: "10 Downing Street",
+    },
+    {
+      key: "2",
+      name: "John",
+      age: 42,
+      address: "10 Downing Street",
+    },
   ];
-  //   const { isOpen, onOpen, onClose } = useDisclosure();
+  const columns = [
+    {
+      title: "Name",
+      id: "name",
+      render:(data: any, index: number) => {
+        return <div>{data.name}</div>
+      }
+    },
+    {
+      title: "Age",
+      id: "age",
+    },
+    {
+      title: "Address",
+      id: "address",
+    },
+  ];
+
   return (
     <form onSubmit={handleSubmit(onSubmitForm)} className="w-full h-screen">
       {/* <Button onClick={onOpen}>Open Modal</Button> */}
@@ -89,6 +100,7 @@ function App() {
           </ModalFooter>
         </ModalContent>
       </Modal> */}
+      <TableCommon columns={columns} data={dataSource} />
       <CommonButton type="submit">Submit</CommonButton>
     </form>
   );

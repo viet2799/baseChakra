@@ -20,6 +20,8 @@ interface IInputNumberFieldProps extends NumberInputProps {
   isIncrease?: boolean;
   customeNumberIncrementStepper?: NumberIncrementStepperProps;
   customeNumberDecrementStepper?: NumberDecrementStepperProps;
+  isMoney?: boolean;
+  typeMoney?: string;
 }
 
 const NumberField = (props: IInputNumberFieldProps) => {
@@ -31,6 +33,8 @@ const NumberField = (props: IInputNumberFieldProps) => {
     isIncrease,
     customeNumberIncrementStepper,
     customeNumberDecrementStepper,
+    isMoney,
+    typeMoney,
     ...restProps
   } = props;
   const { name, value, onChange } = field || {};
