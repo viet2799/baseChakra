@@ -10,21 +10,33 @@ import {
   TableContainer,
   TableHeadProps,
 } from "@chakra-ui/react";
+import classNames from "classnames";
+import CheckboxField from "../../CustomeField/CheckboxField";
+import Pagingnation from "./Components/Pagingnation";
 
 interface IHeaderTablePRops<T> {
   title: string | React.ReactNode;
   id: number | string;
   render?: (data?: T, index?: number) => React.ReactElement;
+  customeClassCell?: string;
 }
 
 interface ITableCommonProps<T> {
   columns: IHeaderTablePRops<T>[];
   data: T[];
   isTfoot?: boolean;
-  isHeader?: boolean;
+  noHeader?: boolean;
   isTableCaption?: boolean;
   dataCaption?: React.ReactNode;
   isSelect?: boolean;
+  onClickRow?: (row: T, index: number) => void;
+  onCheckBoxRow?: (row: T, index: number) => void;
+  customeClassRow?: string;
+  customeClassTable?: string;
+  footerLayout?: React.ReactNode;
+  page?: number;
+  pageSize?: number;
+  totalRecord?: number;
 }
 
 function TableCommon<T>(props: ITableCommonProps<T>) {
@@ -34,8 +46,13 @@ function TableCommon<T>(props: ITableCommonProps<T>) {
     isTableCaption,
     dataCaption,
     isSelect,
-    isHeader,
+    noHeader,
     data,
+    customeClassRow,
+    customeClassTable,
+    onCheckBoxRow,
+    onClickRow,
+    footerLayout,
   } = props;
 
   const renderCellContent = (
@@ -43,41 +60,73 @@ function TableCommon<T>(props: ITableCommonProps<T>) {
     index: number,
     column: IHeaderTablePRops<T>
   ) => {
-    const content = column?.render?.(row, index) || row[column.id];
-    return <div>{content}</div>;
+    const content = column?.render?.(row, index) || row?.[column?.id];
+    return content;
   };
+
+  const handleClickRow = (row: T, index: number) => {
+    if (onClickRow) {
+      onClickRow(row, index);
+    }
+  };
+
+  const handleClickCheckBoxRow = (row: T, inden: number) => {
+    if (onCheckBoxRow) {
+      onCheckBoxRow(row, inden);
+    }
+  };
+
+  const handleSelectAll = () => {};
 
   return (
     <div>
-      <Table variant="simple">
+      <Table className={classNames("", customeClassTable)}>
         {isTableCaption && <TableCaption>{dataCaption}</TableCaption>}
-        <Thead>
-          <Tr>
-            {columns.map((column) => (
-              <Th>{column?.title}</Th>
-            ))}
-          </Tr>
-        </Thead>
+        {!noHeader && (
+          <Thead>
+            <Tr>
+              {isSelect && (
+                <Th>
+                  <CheckboxField onChangeCustome={handleSelectAll} />
+                </Th>
+              )}
+              {columns.map((column) => (
+                <Th>{column?.title}</Th>
+              ))}
+            </Tr>
+          </Thead>
+        )}
         <Tbody>
           {data?.map((row, indexData) => (
-            <Tr>
-              {columns.map((column, indeCol) => (
-                <Td>{renderCellContent(row, indexData, column)}</Td>
-              ))}
+            <Tr
+              className={classNames("", customeClassRow)}
+              onClick={() => {
+                handleClickRow(row, indexData);
+              }}
+            >
+              {isSelect && (
+                <Td>
+                  <CheckboxField
+                    onChangeCustome={() => {
+                      handleClickCheckBoxRow(row, indexData);
+                    }}
+                  />
+                </Td>
+              )}
+              {columns.map((column, indeCol) => {
+                return (
+                  <Td className={classNames("", column.customeClassCell)}>
+                    {renderCellContent(row, indexData, column)}
+                  </Td>
+                );
+              })}
             </Tr>
           ))}
         </Tbody>
-        {isTfoot && (
-          <Tfoot>
-            <Tr>
-              <Th>To convert</Th>
-              <Th>into</Th>
-              <Th isNumeric>multiply by</Th>
-            </Tr>
-          </Tfoot>
-        )}
+        {isTfoot && footerLayout}
       </Table>
       {/* // pagingation */}
+      <Pagingnation />
     </div>
   );
 }

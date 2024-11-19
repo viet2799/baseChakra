@@ -35,14 +35,33 @@ function App() {
       age: 42,
       address: "10 Downing Street",
     },
+    {
+      key: "3",
+      name: "John",
+      age: 42,
+      address: "10 Downing Street",
+    },
+    {
+      key: "4",
+      name: "John",
+      age: 42,
+      address: "10 Downing Street",
+    },
+    {
+      key: "5",
+      name: "John",
+      age: 42,
+      address: "10 Downing Street",
+    },
   ];
   const columns = [
     {
       title: "Name",
       id: "name",
-      render:(data: any, index: number) => {
-        return <div>{data.name}</div>
-      }
+      customeClassCell: "text-red-500",
+      render: (data: any, index: number) => {
+        return <div className="text-red-950">{data.name}</div>;
+      },
     },
     {
       title: "Age",
@@ -100,7 +119,16 @@ function App() {
           </ModalFooter>
         </ModalContent>
       </Modal> */}
-      <TableCommon columns={columns} data={dataSource} />
+      <TableCommon
+        columns={columns}
+        data={dataSource}
+        page={1}
+        pageSize={10}
+        onClickRow={(row, number) => {
+          //   console.log(row, number);
+        }}
+        isSelect
+      />
       <CommonButton type="submit">Submit</CommonButton>
     </form>
   );
